@@ -43,8 +43,8 @@ const columns: TableColumns<Country> = [
   {
     Header: 'Death Rate',
     accessor: (c) => {
-      const { cases, deaths } = c;
-      return ((deaths * 100) / cases).toFixed(2) + '%';
+      const { cases, deaths, active } = c;
+      return ((deaths * 100) / (cases - active)).toFixed(2) + '%';
     }
   },
   {
