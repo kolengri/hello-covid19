@@ -1,0 +1,54 @@
+{
+    "extends": [
+        "tslint-config-prettier",
+        "tslint:latest",
+        "tslint-react",
+        "tslint-react-hooks"
+    ],
+    "rulesDirectory": [
+        "node_modules/tslint-origin-ordered-imports-rule/dist"
+    ],
+    "rules": {
+        "interface-name": false,
+        "jsx-boolean-value": false,
+        "jsx-no-multiline-js": false,
+        "jsx-wrap-multiline": false,
+        "member-access": false,
+        "no-empty-interface": false,
+        "no-namespace": false,
+        "no-submodule-imports": false,
+        "no-invalid-template-strings": false,
+        "object-literal-sort-keys": false,
+        "ordered-imports": true,
+        "react-hooks-nesting": "error",
+        "max-line-length": [
+            true,
+            {
+                "limit": 130,
+                "ignore-pattern": "^import |^export {(.*?)}"
+            }
+        ],
+        "origin-ordered-imports": [
+            true,
+            "one-blank-line",
+            [
+                "^react$",
+                "lib",
+                "^@/.+",
+                "user"
+            ]
+        ],
+        "prefer-const": true,
+        "prefer-readonly": false,
+        "quotemark": [
+            true,
+            "single",
+            "jsx-double"
+        ],
+        "no-console": false,
+        "no-implicit-dependencies": false,
+        "trailing-comma": false,
+        "member-ordering": false,
+        "no-internal-module": false
+    }
+}
