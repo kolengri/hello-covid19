@@ -1,8 +1,8 @@
 import * as React from 'react';
 
 import { useCountries } from '../../../hooks';
-import { Country } from '../../../models';
-import { Table, TableColumns } from '../../ui';
+import { Country, StoreStatus } from '../../../models';
+import { Segment, Table, TableColumns } from '../../ui';
 
 export type CountriesTableProps = {};
 
@@ -60,9 +60,9 @@ const CountriesTableMemo: React.FC<CountriesTableProps> = (props) => {
   const { state } = useCountries();
 
   return (
-    <>
-      <Table bordered data={state.content || []} columns={columns} />
-    </>
+    <Segment loading={state.status === StoreStatus.Fetching}>
+      <Table striped interactive bordered data={state.content || []} columns={columns} />
+    </Segment>
   );
 };
 
