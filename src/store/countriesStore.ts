@@ -15,7 +15,7 @@ const countResolved = (totalCase: number, activeCases: number) => totalCase - ac
 const countDeathRate = (recovered: number, resolved: number) => (recovered > 0 ? Math.floor(resolved / recovered) : 0);
 const countRecoveryRate = (deaths: number, resolved: number) => (deaths > 0 ? Math.floor(resolved / deaths) : 0);
 const countRating = (deaths: number, recovered: number, critical: number, active: number) => {
-  return (recovered * 5 + active * 2 + critical * 2 + deaths * 1) / (deaths + recovered + critical + active);
+  return (recovered * 5 + active * 2 + critical * 2 + deaths * -1) / (deaths + recovered + critical + active);
 };
 
 export interface Model extends Store<Content | undefined> {
