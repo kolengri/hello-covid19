@@ -19,7 +19,7 @@ export const THBackground = styled.div({
   position: 'absolute',
   width: 'calc(100% - 1px)',
   height: 'calc(100% - 1px)',
-  top: '1px',
+  top: 0,
   left: '1px',
   zIndex: -2
 });

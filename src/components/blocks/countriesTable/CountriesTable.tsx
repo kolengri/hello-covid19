@@ -8,6 +8,7 @@ import { StoreStatus } from '../../../models';
 import { Country as CountryPage } from '../../../pages/country';
 import { Item as StoreItem } from '../../../store/countriesStore';
 import { Segment, Table, TableColumns } from '../../ui';
+import { Danger, Success, Warning } from './style';
 
 export type CountriesTableProps = {};
 
@@ -43,7 +44,9 @@ const columns: TableColumns<StoreItem> = [
         Header: 'New Cases',
         id: 'totalNew',
         accessor: (c) => c.todayCases,
-        Cell: ({ cell }) => cell.value.toLocaleString()
+        Cell: ({ cell }) => {
+          return cell.value > 0 ? <Warning>+{cell.value.toLocaleString()}</Warning> : cell.value;
+        }
       },
 
       {
@@ -56,7 +59,9 @@ const columns: TableColumns<StoreItem> = [
         Header: 'Recovered Cases',
         id: 'totalRecovery',
         accessor: (c) => c.recovered,
-        Cell: ({ cell }) => cell.value.toLocaleString()
+        Cell: ({ cell }) => {
+          return cell.value > 0 ? <Success>{cell.value.toLocaleString()}</Success> : cell.value;
+        }
       }
     ]
   },
@@ -74,7 +79,9 @@ const columns: TableColumns<StoreItem> = [
         Header: 'New Deaths',
         id: 'newDeaths',
         accessor: (c) => c.todayDeaths,
-        Cell: ({ cell }) => cell.value.toLocaleString()
+        Cell: ({ cell }) => {
+          return cell.value > 0 ? <Danger>+{cell.value.toLocaleString()}</Danger> : cell.value;
+        }
       }
     ]
   },
@@ -107,18 +114,20 @@ const CountriesTableMemo: React.FC<CountriesTableProps> = (props) => {
   const loading = state.status === StoreStatus.Fetching;
 
   return (
-    <Segment loading={loading} style={{ padding: 0 }}>
-      {state.error && (
-        <Callout
-          intent="danger"
-          // tslint:disable-next-line: jsx-no-lambda
-          onClick={() => fetch()}
-        >
-          {state.error}
-        </Callout>
-      )}
-      {!state.error && <Table striped interactive bordered data={state.content || []} columns={columns} />}
-    </Segment>
+    <>
+      <Segment loading={loading} style={{ padding: 0 }}>
+        {state.error && (
+          <Callout
+            intent="danger"
+            // tslint:disable-next-line: jsx-no-lambda
+            onClick={() => fetch()}
+          >
+            {state.error}
+          </Callout>
+        )}
+        {!state.error && <Table striped interactive bordered data={state.content || []} columns={columns} />}
+      </Segment>
+    </>
   );
 };
 

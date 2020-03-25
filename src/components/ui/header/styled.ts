@@ -6,5 +6,6 @@ export const Outer = styled.div({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  marginBottom: BASE_INDENT_PX
+  marginBottom: BASE_INDENT_PX,
+  marginTop: BASE_INDENT_PX
 });

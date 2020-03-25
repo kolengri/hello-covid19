@@ -6,7 +6,7 @@ export type FooterProps = {};
 const FooterMemo: React.FC<FooterProps> = (props) => {
   return (
     <Outer>
-      <a href="https://www.linkedin.com/in/kolengri/" target="_blank">
+      <a href="https://www.linkedin.com/in/kolengri/" rel="noopener noreferrer" target="_blank">
         Kolengri
       </a>
     </Outer>
