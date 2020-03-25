@@ -16,11 +16,13 @@ export type Weights = {
   active: number;
   critical: number;
   deaths: number;
+  todayCases: number;
 };
 
 const WEIGHTS: Weights = {
   recovered: 5,
   active: 0,
+  todayCases: 0,
   critical: -1,
   deaths: -5
 };
@@ -73,11 +75,11 @@ const store: Model = {
       actions.fetchStart();
       const response = await fetchCounties();
       const content: Content = response.map((item) => {
-        const { cases, active, recovered, deaths, critical } = item;
+        const { cases, active, recovered, deaths, critical, todayCases } = item;
         const resolved = countResolved(cases, active);
         const deathRate = countDeathRate(recovered, resolved);
         const recoveryRate = countRecoveryRate(deaths, resolved);
-        const rating = countRating({ deaths, recovered, critical, active });
+        const rating = countRating({ deaths, recovered, critical, active, todayCases });
         return { ...item, recoveryRate, deathRate, resolved, rating };
       });
       actions.fetchSuccess(content);

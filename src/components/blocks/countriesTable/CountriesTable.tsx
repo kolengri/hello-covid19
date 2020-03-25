@@ -94,13 +94,13 @@ const columns: TableColumns<StoreItem> = [
     }
   },
   {
-    Header: 'Success Rating',
-    accessor: (c) => {
-      const { rating } = c;
-
-      return rating;
-    },
-    Cell: ({ cell }) => cell.value.toFixed(2).toLocaleString()
+    Header: 'Success Rating (-5<>5)',
+    width: '30px',
+    accessor: (c) => Number(c.rating),
+    Cell: ({ cell }) => {
+      const ratio = cell.value.toFixed(2).toLocaleString();
+      return <Danger>{ratio}</Danger>;
+    }
   },
   {
     Header: 'Actions',
