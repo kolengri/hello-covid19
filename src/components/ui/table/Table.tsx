@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Colors, Icon, IHTMLTableProps } from '@blueprintjs/core';
+import { Callout, Colors, Icon, IHTMLTableProps } from '@blueprintjs/core';
 import { Column, useSortBy, useTable } from 'react-table';
 
 import { BaseTable, TH } from './styled';
@@ -45,6 +45,13 @@ const TableMemo: React.FC<TableProps<any>> = (props) => {
         ))}
       </thead>
       <tbody {...getTableBodyProps()}>
+        {rows.length === 0 && (
+          <tr>
+            <td colSpan={columns.length}>
+              <Callout intent="none">No content</Callout>
+            </td>
+          </tr>
+        )}
         {rows.map((row, i) => {
           prepareRow(row);
           return (

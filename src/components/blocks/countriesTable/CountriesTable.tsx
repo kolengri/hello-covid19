@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Button } from '@blueprintjs/core';
+import { Button, Callout } from '@blueprintjs/core';
 import { useHistory } from 'react-router-dom';
 
 import { useCountries } from '../../../hooks';
@@ -84,12 +84,21 @@ const columns: TableColumns<StoreItem> = [
 ];
 
 const CountriesTableMemo: React.FC<CountriesTableProps> = (props) => {
-  const { state } = useCountries();
+  const { state, fetch } = useCountries();
   const loading = state.status === StoreStatus.Fetching;
 
   return (
     <Segment loading={loading} style={{ padding: 0 }}>
-      <Table striped interactive bordered data={state.content || []} columns={columns} />
+      {state.error && (
+        <Callout
+          intent="danger"
+          // tslint:disable-next-line: jsx-no-lambda
+          onClick={() => fetch()}
+        >
+          {state.error}
+        </Callout>
+      )}
+      {!state.error && <Table striped interactive bordered data={state.content || []} columns={columns} />}
     </Segment>
   );
 };
