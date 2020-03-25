@@ -24,36 +24,36 @@ const columns: TableColumns<StoreItem> = [
     accessor: (c) => c.country
   },
   {
-    Header: 'Cases',
+    Header: 'Total Cases',
+    id: 'totalCases',
+    accessor: (c) => c.cases,
+    Cell: ({ cell }) => cell.value.toLocaleString()
+  },
+  {
+    Header: 'Alive Cases',
     columns: [
       {
-        Header: 'Total',
-        id: 'totalCases',
-        accessor: (c) => c.cases,
-        Cell: ({ cell }) => cell.value.toLocaleString()
-      },
-      {
-        Header: 'Active',
+        Header: 'Active Cases',
         id: 'totalActive',
         accessor: (c) => c.active,
         Cell: ({ cell }) => cell.value.toLocaleString()
       },
 
       {
-        Header: 'New',
+        Header: 'New Cases',
         id: 'totalNew',
         accessor: (c) => c.todayCases,
         Cell: ({ cell }) => cell.value.toLocaleString()
       },
 
       {
-        Header: 'Critical',
+        Header: 'Critical Cases',
         id: 'totalCritical',
         accessor: (c) => c.critical,
         Cell: ({ cell }) => cell.value.toLocaleString()
       },
       {
-        Header: 'Recovered',
+        Header: 'Recovered Cases',
         id: 'totalRecovery',
         accessor: (c) => c.recovered,
         Cell: ({ cell }) => cell.value.toLocaleString()
@@ -65,13 +65,13 @@ const columns: TableColumns<StoreItem> = [
     Header: 'Death Cases',
     columns: [
       {
-        Header: 'Total',
+        Header: 'Total Deaths',
         id: 'totalDeaths',
         accessor: (c) => c.deaths,
         Cell: ({ cell }) => cell.value.toLocaleString()
       },
       {
-        Header: 'New',
+        Header: 'New Deaths',
         id: 'newDeaths',
         accessor: (c) => c.todayDeaths,
         Cell: ({ cell }) => cell.value.toLocaleString()

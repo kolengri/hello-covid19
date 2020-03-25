@@ -1,6 +1,7 @@
 import * as React from 'react';
 
-import { Container, Headers } from '../../ui';
+import { Container, Footer, Headers } from '../../ui';
+import { Main, Outer } from './styled';
 
 export type RootLayoutProps = {
   children: React.ReactNode;
@@ -9,12 +10,13 @@ export type RootLayoutProps = {
 const RootLayoutMemo: React.FC<RootLayoutProps> = (props) => {
   const { children } = props;
   return (
-    <>
+    <Outer>
       <Container>
         <Headers />
       </Container>
-      {children}
-    </>
+      <Main>{children}</Main>
+      <Footer />
+    </Outer>
   );
 };
 

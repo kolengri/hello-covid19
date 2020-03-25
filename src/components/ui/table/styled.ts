@@ -11,7 +11,15 @@ export const TH = styled.th({
   top: 0,
   userSelect: 'none',
   cursor: 'pointer',
-  position: 'sticky',
+  position: 'sticky'
+});
+
+export const THBackground = styled.div({
   backgroundColor: Colors.WHITE,
-  boxShadow: '0 2px 2px -1px rgba(0, 0, 0, 0.1) !important'
+  position: 'absolute',
+  width: 'calc(100% - 1px)',
+  height: 'calc(100% - 1px)',
+  top: '1px',
+  left: '1px',
+  zIndex: -2
 });

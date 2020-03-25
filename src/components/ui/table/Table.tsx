@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Callout, Colors, Icon, IHTMLTableProps } from '@blueprintjs/core';
 import { Column, useSortBy, useTable } from 'react-table';
 
-import { BaseTable, TH } from './styled';
+import { BaseTable, TH, THBackground } from './styled';
 
 export type TableColumns<T extends object> = Column<T>[];
 
@@ -33,8 +33,13 @@ const TableMemo: React.FC<TableProps<any>> = (props) => {
             {headerGroup.headers.map((column, i) => (
               // Add the sorting props to control sorting. For this example
               // we can add them into the header props
-              <TH key={i} {...column.getHeaderProps((column as any).getSortByToggleProps())}>
+              <TH
+                // active={(intersection?.intersectionRatio || 1) < 1}
+                key={i}
+                {...column.getHeaderProps((column as any).getSortByToggleProps())}
+              >
                 {column.render('Header')}
+                <THBackground />
                 {/* Add a sort direction indicator */}
                 <span>
                   {(column as any).isSorted ? (
