@@ -23,41 +23,60 @@ const columns: TableColumns<StoreItem> = [
     Header: 'Country',
     accessor: (c) => c.country
   },
+  {
+    Header: 'Cases',
+    columns: [
+      {
+        Header: 'Total',
+        id: 'totalCases',
+        accessor: (c) => c.cases,
+        Cell: ({ cell }) => cell.value.toLocaleString()
+      },
+      {
+        Header: 'Active',
+        id: 'totalActive',
+        accessor: (c) => c.active,
+        Cell: ({ cell }) => cell.value.toLocaleString()
+      },
+
+      {
+        Header: 'New',
+        id: 'totalNew',
+        accessor: (c) => c.todayCases,
+        Cell: ({ cell }) => cell.value.toLocaleString()
+      },
+
+      {
+        Header: 'Critical',
+        id: 'totalCritical',
+        accessor: (c) => c.critical,
+        Cell: ({ cell }) => cell.value.toLocaleString()
+      },
+      {
+        Header: 'Recovered',
+        id: 'totalRecovery',
+        accessor: (c) => c.recovered,
+        Cell: ({ cell }) => cell.value.toLocaleString()
+      }
+    ]
+  },
 
   {
-    Header: 'Total Cases',
-    accessor: (c) => c.cases,
-    Cell: ({ cell }) => cell.value.toLocaleString()
-  },
-  {
-    Header: 'New Cases',
-    accessor: (c) => c.todayCases,
-    Cell: ({ cell }) => cell.value.toLocaleString()
-  },
-  {
-    Header: 'Active Cases',
-    accessor: (c) => c.active,
-    Cell: ({ cell }) => cell.value.toLocaleString()
-  },
-  {
-    Header: 'Total Deaths',
-    accessor: (c) => c.deaths,
-    Cell: ({ cell }) => cell.value.toLocaleString()
-  },
-  {
-    Header: 'New Deaths',
-    accessor: (c) => c.todayDeaths,
-    Cell: ({ cell }) => cell.value.toLocaleString()
-  },
-  {
-    Header: 'Critical',
-    accessor: (c) => c.critical,
-    Cell: ({ cell }) => cell.value.toLocaleString()
-  },
-  {
-    Header: 'Total Recovered',
-    accessor: (c) => c.recovered,
-    Cell: ({ cell }) => cell.value.toLocaleString()
+    Header: 'Death Cases',
+    columns: [
+      {
+        Header: 'Total',
+        id: 'totalDeaths',
+        accessor: (c) => c.deaths,
+        Cell: ({ cell }) => cell.value.toLocaleString()
+      },
+      {
+        Header: 'New',
+        id: 'newDeaths',
+        accessor: (c) => c.todayDeaths,
+        Cell: ({ cell }) => cell.value.toLocaleString()
+      }
+    ]
   },
   {
     Header: 'Recovery/Death',
