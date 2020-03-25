@@ -1,4 +1,4 @@
-import { Classes, Spinner as BaseSpinner } from '@blueprintjs/core';
+import { Spinner as BaseSpinner } from '@blueprintjs/core';
 import styled, { CSSObject } from 'styled-components';
 
 const disabled: CSSObject = {

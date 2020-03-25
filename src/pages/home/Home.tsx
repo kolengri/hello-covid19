@@ -6,7 +6,7 @@ import { urlDecorator } from '../../utils';
 
 export type HomeProps = {};
 
-export const url = urlDecorator(`${BASE_URL}`);
+export const url = urlDecorator(BASE_URL);
 
 export type HomeParams = {};
 
