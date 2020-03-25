@@ -13,9 +13,9 @@ export type Content = Item[];
 
 const weights = {
   recovered: 5,
-  active: 2,
-  critical: 1,
-  death: -1
+  active: 0,
+  critical: -1,
+  death: -5
 };
 
 const countResolved = (totalCase: number, activeCases: number) => totalCase - activeCases;
