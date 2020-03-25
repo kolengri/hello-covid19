@@ -21,6 +21,10 @@ const TableMemo: React.FC<TableProps<any>> = (props) => {
     },
     useSortBy
   );
+  const totalColumns = headerGroups.reduce((acc, curr) => {
+    return acc + curr.headers.length;
+  }, 0);
+
   return (
     <BaseTable {...tableProps} {...getTableProps()}>
       <thead>
@@ -47,7 +51,7 @@ const TableMemo: React.FC<TableProps<any>> = (props) => {
       <tbody {...getTableBodyProps()}>
         {rows.length === 0 && (
           <tr>
-            <td colSpan={columns.length}>
+            <td colSpan={totalColumns}>
               <Callout intent="none">No content</Callout>
             </td>
           </tr>
