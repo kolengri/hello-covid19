@@ -11,21 +11,37 @@ export type Item = Country & {
 };
 export type Content = Item[];
 
-const weights = {
+export type Weights = {
+  recovered: number;
+  active: number;
+  critical: number;
+  deaths: number;
+};
+
+const WEIGHTS: Weights = {
   recovered: 5,
   active: 0,
   critical: -1,
-  death: -5
+  deaths: -5
 };
+
+export type WeightsData = Record<keyof Weights, number>;
 
 const countResolved = (totalCase: number, activeCases: number) => totalCase - activeCases;
 const countDeathRate = (recovered: number, resolved: number) => (recovered > 0 ? Math.floor(resolved / recovered) : 0);
 const countRecoveryRate = (deaths: number, resolved: number) => (deaths > 0 ? Math.floor(resolved / deaths) : 0);
-const countRating = (deaths: number, recovered: number, critical: number, active: number) => {
-  return (
-    (recovered * weights.recovered + active * weights.active + critical * weights.critical + deaths * weights.death) /
-    (deaths + recovered + critical + active)
-  );
+const countRating = (data: WeightsData) => {
+  const weightResult = Object.entries(data).reduce((acc, curr) => {
+    const [key, value] = curr;
+    const weight = WEIGHTS[key as keyof WeightsData] || 0;
+    return acc + value * weight;
+  }, 0);
+  const weightSum = Object.entries(data).reduce((acc, curr) => {
+    const [, value] = curr;
+    return acc + value;
+  }, 0);
+
+  return weightResult / weightSum;
 };
 
 export interface Model extends Store<Content | undefined> {
@@ -61,7 +77,7 @@ const store: Model = {
         const resolved = countResolved(cases, active);
         const deathRate = countDeathRate(recovered, resolved);
         const recoveryRate = countRecoveryRate(deaths, resolved);
-        const rating = countRating(deaths, recovered, critical, active);
+        const rating = countRating({ deaths, recovered, critical, active });
         return { ...item, recoveryRate, deathRate, resolved, rating };
       });
       actions.fetchSuccess(content);
