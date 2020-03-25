@@ -3,7 +3,20 @@ import { Action, action, Thunk, thunk } from 'easy-peasy';
 import { fetchCounties } from '../api';
 import { Country, Store, StoreStatus } from '../models';
 
-export type Content = Country[];
+export type Item = Country & {
+  deathRate: number;
+  resolved: number;
+  recoveryRate: number;
+  rating: number;
+};
+export type Content = Item[];
+
+const countResolved = (totalCase: number, activeCases: number) => totalCase - activeCases;
+const countDeathRate = (recovered: number, resolved: number) => (recovered > 0 ? Math.floor(resolved / recovered) : 0);
+const countRecoveryRate = (deaths: number, resolved: number) => (deaths > 0 ? Math.floor(resolved / deaths) : 0);
+const countRating = (deaths: number, recovered: number, critical: number, active: number) => {
+  return (recovered * 5 + active * 2 + critical * 2 + deaths * 1) / (deaths + recovered + critical + active);
+};
 
 export interface Model extends Store<Content | undefined> {
   fetch: Thunk<Model>;
@@ -32,7 +45,15 @@ const store: Model = {
   fetch: thunk(async (actions, payload) => {
     try {
       actions.fetchStart();
-      const content = await fetchCounties();
+      const response = await fetchCounties();
+      const content: Content = response.map((item) => {
+        const { cases, active, recovered, deaths, critical } = item;
+        const resolved = countResolved(cases, active);
+        const deathRate = countDeathRate(recovered, resolved);
+        const recoveryRate = countRecoveryRate(deaths, resolved);
+        const rating = countRating(deaths, recovered, critical, active);
+        return { ...item, recoveryRate, deathRate, resolved, rating };
+      });
       actions.fetchSuccess(content);
     } catch (error) {
       actions.fetchError(error);

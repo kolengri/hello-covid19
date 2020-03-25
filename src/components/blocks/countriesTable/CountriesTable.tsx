@@ -1,11 +1,12 @@
 import * as React from 'react';
 
-import { Button, Divider } from '@blueprintjs/core';
+import { Button } from '@blueprintjs/core';
 import { useHistory } from 'react-router-dom';
 
 import { useCountries } from '../../../hooks';
-import { Country, StoreStatus } from '../../../models';
+import { StoreStatus } from '../../../models';
 import { Country as CountryPage } from '../../../pages/country';
+import { Item as StoreItem } from '../../../store/countriesStore';
 import { Segment, Table, TableColumns } from '../../ui';
 
 export type CountriesTableProps = {};
@@ -17,7 +18,7 @@ const Detail: React.FC<{ country: string }> = ({ country }) => {
   return <Button onClick={() => history.push(CountryPage.url({ country }))}>Detail</Button>;
 };
 
-const columns: TableColumns<Country> = [
+const columns: TableColumns<StoreItem> = [
   {
     Header: 'Country',
     accessor: (c) => c.country
@@ -25,73 +26,69 @@ const columns: TableColumns<Country> = [
 
   {
     Header: 'Total Cases',
-    accessor: (c) => c.cases.toLocaleString()
+    accessor: (c) => c.cases,
+    Cell: ({ cell }) => cell.value.toLocaleString()
   },
   {
     Header: 'New Cases',
-    accessor: (c) => c.todayCases.toLocaleString()
+    accessor: (c) => c.todayCases,
+    Cell: ({ cell }) => cell.value.toLocaleString()
   },
   {
     Header: 'Active Cases',
-    accessor: (c) => c.active.toLocaleString()
+    accessor: (c) => c.active,
+    Cell: ({ cell }) => cell.value.toLocaleString()
   },
   {
     Header: 'Total Deaths',
-    accessor: (c) => c.deaths.toLocaleString()
+    accessor: (c) => c.deaths,
+    Cell: ({ cell }) => cell.value.toLocaleString()
   },
   {
     Header: 'New Deaths',
-    accessor: (c) => c.todayDeaths.toLocaleString()
+    accessor: (c) => c.todayDeaths,
+    Cell: ({ cell }) => cell.value.toLocaleString()
   },
   {
     Header: 'Critical',
-    accessor: (c) => c.critical.toLocaleString()
+    accessor: (c) => c.critical,
+    Cell: ({ cell }) => cell.value.toLocaleString()
   },
   {
     Header: 'Total Recovered',
-    accessor: (c) => c.recovered.toLocaleString()
+    accessor: (c) => c.recovered,
+    Cell: ({ cell }) => cell.value.toLocaleString()
   },
   {
-    Header: 'Death Rate',
+    Header: 'Recovery/Death',
     accessor: (c) => {
-      const { cases, deaths, active } = c;
-      if (deaths === 0) {
-        return '-';
-      }
-      return ((deaths * 100) / (cases - active)).toFixed(2) + '%';
+      const { recoveryRate, deathRate } = c;
+
+      return `${recoveryRate}/${deathRate}`;
     }
   },
   {
-    Header: 'Recovery Rate',
+    Header: 'Success Rating',
     accessor: (c) => {
-      const { cases, recovered, active } = c;
-      if (recovered === 0) {
-        return '-';
-      }
-      return ((recovered * 100) / (cases - active)).toFixed(2) + '%';
-    }
+      const { rating } = c;
+
+      return rating;
+    },
+    Cell: ({ cell }) => cell.value.toFixed(2).toLocaleString()
   },
   {
     Header: 'Actions',
-
-    accessor: ({ country }) => {
-      // tslint:disable-next-line: react-hooks-nesting
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      return <Detail country={country} />;
-    }
+    accessor: ({ country }) => country,
+    Cell: ({ cell }) => <Detail country={cell.value} />
   }
 ];
 
 const CountriesTableMemo: React.FC<CountriesTableProps> = (props) => {
-  const { state, fetch } = useCountries();
+  const { state } = useCountries();
   const loading = state.status === StoreStatus.Fetching;
 
   return (
-    <Segment loading={loading}>
-      <Button loading={loading} onClick={() => fetch()}>
-        Refresh Table
-      </Button>
-      <Divider />
+    <Segment loading={loading} style={{ padding: 0 }}>
       <Table striped interactive bordered data={state.content || []} columns={columns} />
     </Segment>
   );
