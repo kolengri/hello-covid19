@@ -13,7 +13,11 @@ export type HomeParams = {};
 const HomeMemo: React.FC<HomeProps> = (props) => {
   return (
     <PageLayout title="Hello COVID19 - Home Page">
-      <Chart />
+      <div style={{ display: 'flex' }}>
+        <Chart dataKey="active" title="Active cases" />
+        <Chart dataKey="todayCases" title="New cases" />
+        <Chart dataKey="todayDeaths" title="New deaths" />
+      </div>
       <CountriesTable />
     </PageLayout>
   );
