@@ -24,7 +24,7 @@ const ChartMemo: React.FC<ChartProps> = (props) => {
     <Segment loading={loading}>
       {!state.error && (
         <>
-          <h2>Countries by current cases</h2>
+          <h2>New cases by countries</h2>
           <PieChart width={800} height={400}>
             <Pie
               dataKey="todayCases"
