@@ -4,7 +4,6 @@ const FtpDeploy = require('ftp-deploy');
 const ftpDeploy = new FtpDeploy();
 
 const { FTP_SERVER, FTP_USER, FTP_PASSWORD, FTP_PATH } = process.env;
-
 const config = {
   user: FTP_USER,
   // Password optional, prompted if none given
@@ -23,8 +22,9 @@ const config = {
   forcePasv: false
 };
 
+console.log('[DEPLOY] Start');
 // use with promises
 ftpDeploy
   .deploy(config)
-  .then((res) => console.log('finished:', res))
+  .then((res) => console.log('[DEPLOY] finished:', res))
   .catch((err) => console.log(err));
