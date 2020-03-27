@@ -17,7 +17,7 @@ const PieMemo: React.FC<PieProps> = (props) => {
     <>
       <Segment loading={loading} style={{ padding: 0 }}>
         {!state.error && (
-          <LineChart width={800} height={400} data={data ? data.splice(0, 5) : []}>
+          <LineChart width={800} height={400} data={data ? [...data].splice(0, 5) : []}>
             <Line type="monotone" dataKey="todayCases" stroke="#8884d8" />
             <XAxis dataKey="country" />
             <YAxis />
