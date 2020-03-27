@@ -14,9 +14,10 @@ export type CountriesTableProps = {};
 
 const Detail: React.FC<{ country: string }> = ({ country }) => {
   const history = useHistory();
+  const handleRedirect = React.useCallback(() => history.push(CountryPage.url({ country })), [country, history]);
 
   // tslint:disable-next-line: jsx-no-lambda
-  return <Button onClick={() => history.push(CountryPage.url({ country }))}>Detail</Button>;
+  return <Button onClick={handleRedirect}>Detail</Button>;
 };
 
 const columns: TableColumns<StoreItem> = [
