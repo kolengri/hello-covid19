@@ -15,13 +15,15 @@ export type ChartProps = {
   title: string;
 };
 
+const TOP_COUNTRIES = 5;
+
 const useChartData = (config: ChartProps) => {
   const { dataKey } = config;
   const { state } = useCountries();
   const loading = state.status === StoreStatus.Fetching;
   const data = state.content || [];
   const sortedData = React.useMemo(() => [...data].sort((a, b) => (a[dataKey] >= b[dataKey] ? -1 : 1)), [data, dataKey]);
-  const otherCountries = sortedData.slice(8);
+  const otherCountries = sortedData.slice(TOP_COUNTRIES);
   const otherCountriesCases = React.useMemo(
     () =>
       otherCountries.reduce((sum, current) => {
@@ -30,7 +32,7 @@ const useChartData = (config: ChartProps) => {
     [dataKey, otherCountries]
   );
   const topCountriesData = React.useMemo(
-    () => sortedData.slice(0, 8).concat([{ country: 'Others', [dataKey]: otherCountriesCases } as any]),
+    () => sortedData.slice(0, TOP_COUNTRIES).concat([{ country: 'Others', [dataKey]: otherCountriesCases } as any]),
     [dataKey, otherCountriesCases, sortedData]
   );
 
