@@ -31,7 +31,7 @@ const ChartMemo: React.FC<ChartProps> = ({ dataKey, title }) => {
           <h3>{title}</h3>
           <PieChart width={450} height={400}>
             <Pie
-              dataKey="todayCases"
+              dataKey={dataKey}
               isAnimationActive={false}
               data={sortedData.slice(0, 8).concat([{ country: 'Others', [dataKey]: otherCountriesCases } as any])}
               cx={200}
