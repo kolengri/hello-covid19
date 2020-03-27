@@ -18,6 +18,7 @@ const CountryMemo: React.FC<CountryProps> = (props) => {
   return (
     <PageLayout title={`Hello COVID19 - ${country}`} header={country}>
       {country}
+      <h1>WIP PAGE</h1>
     </PageLayout>
   );
 };
