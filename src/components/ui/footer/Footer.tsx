@@ -9,6 +9,10 @@ const FooterMemo: React.FC<FooterProps> = (props) => {
       <a href="https://www.linkedin.com/in/kolengri/" rel="noopener noreferrer" target="_blank">
         Kolengri
       </a>
+      {' | '}
+      <a href="https://www.linkedin.com/in/alex-alexeev-ma-62550a1b/" rel="noopener noreferrer" target="_blank">
+        Alexedev
+      </a>
     </Outer>
   );
 };
