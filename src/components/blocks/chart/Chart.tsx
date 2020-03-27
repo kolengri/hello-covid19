@@ -42,7 +42,7 @@ const ChartMemo: React.FC<ChartProps> = (props) => {
               ))}
             </Pie>
             <Tooltip />
-            <Legend verticalAlign="top" />
+            <Legend layout="vertical" verticalAlign="middle" />
           </PieChart>
         </>
       )}
