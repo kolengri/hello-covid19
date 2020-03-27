@@ -13,7 +13,7 @@ const config = {
   localRoot: __dirname + '/build',
   remoteRoot: FTP_PATH,
   // include: ["*", "**/*"],      // this would upload everything except dot files
-  include: ['*'],
+  include: ['*', '.htaccess'],
   // e.g. exclude sourcemaps, and ALL files in node_modules (including dot files)
   exclude: ['.git/**'],
   // delete ALL existing files at destination before uploading, if true
