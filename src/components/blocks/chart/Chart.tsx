@@ -1,12 +1,12 @@
 import * as React from 'react';
 
-import { LineChart, Line, XAxis, YAxis, PieChart, Pie, Cell, Tooltip } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
 
 import { useCountries } from '../../../hooks';
 import { StoreStatus } from '../../../models';
 import { Segment } from '../../ui';
 
-const COLORS = ['red', '#00C49F', '#FFBB28', '#FF8042', '#0088FE', 'purple'];
+const COLORS = ['red', '#00C49F', '#FFBB28', '#FF8042', '#0088FE', 'purple', 'magenta', 'blue', '#000'];
 
 export type ChartProps = {};
 
@@ -15,16 +15,21 @@ const ChartMemo: React.FC<ChartProps> = (props) => {
   const loading = state.status === StoreStatus.Fetching;
   const data = state.content || [];
   const sortedData = [...data].sort((a, b) => (a.todayCases >= b.todayCases ? -1 : 1));
+  const otherCountries = sortedData.slice(8);
+  const otherCountriesCases = otherCountries.reduce((sum, current) => {
+    return sum + current.todayCases;
+  }, 0);
 
   return (
-    <Segment loading={loading} style={{ padding: 0 }}>
+    <Segment loading={loading}>
       {!state.error && (
         <>
+          <h2>Countries by current cases</h2>
           <PieChart width={800} height={400}>
             <Pie
               dataKey="todayCases"
               isAnimationActive={false}
-              data={sortedData.slice(0, 6)}
+              data={sortedData.slice(0, 8).concat([{ country: 'Others', todayCases: otherCountriesCases } as any])}
               cx={200}
               cy={200}
               outerRadius={80}
@@ -37,6 +42,7 @@ const ChartMemo: React.FC<ChartProps> = (props) => {
               ))}
             </Pie>
             <Tooltip />
+            <Legend verticalAlign="top" />
           </PieChart>
         </>
       )}
