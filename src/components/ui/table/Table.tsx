@@ -1,26 +1,17 @@
 import * as React from 'react';
 
 import { Callout, Colors, Icon, IHTMLTableProps } from '@blueprintjs/core';
-import { Column, useSortBy, useTable } from 'react-table';
+import { Column, TableOptions, useSortBy, UseSortByColumnOptions, UseSortByOptions, useTable } from 'react-table';
 
 import { BaseTable, TableWrapper, TH, THBackground } from './styled';
 
-export type TableColumns<T extends object> = Column<T>[];
+export type TableColumns<T extends object> = (Column<T> & UseSortByColumnOptions<T>)[];
 
-export type TableProps<T extends object> = {
-  columns: TableColumns<T>;
-  data: T[];
-} & IHTMLTableProps;
+export type TableProps<T extends object> = {} & IHTMLTableProps & TableOptions<T> & UseSortByOptions<T>;
 
 const TableMemo: React.FC<TableProps<any>> = (props) => {
   const { columns, data, ...tableProps } = props;
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable(
-    {
-      columns,
-      data
-    },
-    useSortBy
-  );
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable(props, useSortBy);
   const totalColumns = headerGroups.reduce((acc, curr) => {
     return acc + curr.headers.length;
   }, 0);

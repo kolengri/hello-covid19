@@ -40,7 +40,8 @@ const columns: TableColumns<StoreItem> = [
         Header: 'Active Cases',
         id: 'totalActive',
         accessor: (c) => c.active,
-        Cell: ({ cell }) => cell.value.toLocaleString()
+        Cell: ({ cell }) => cell.value.toLocaleString(),
+        ...sortTableByNumber
       },
 
       {
@@ -70,7 +71,7 @@ const columns: TableColumns<StoreItem> = [
       {
         Header: 'Cases per Mil.',
         id: 'casesPerMil',
-        accessor: (c) => c.casesPerOneMillion,
+        accessor: (c) => c.casesPerOneMillion || 0,
         Cell: ({ cell }) => cell.value.toLocaleString(),
         ...sortTableByNumber
       }
@@ -98,7 +99,7 @@ const columns: TableColumns<StoreItem> = [
         Header: 'Deaths per Mil.',
         id: 'deathsPerMil',
 
-        accessor: (c) => c.deathsPerOneMillion,
+        accessor: (c) => c.deathsPerOneMillion || 0,
         Cell: ({ cell }) => {
           return <Danger>{cell.value.toLocaleString()}</Danger>;
         },
@@ -117,7 +118,7 @@ const columns: TableColumns<StoreItem> = [
   {
     Header: 'Success Rating (-5<>5)',
     width: '30px',
-    accessor: (c) => Number(c.rating),
+    accessor: (c) => c.rating,
     Cell: ({ cell }) => {
       const ratio = cell.value.toFixed(2).toLocaleString();
       return <Danger>{ratio}</Danger>;
