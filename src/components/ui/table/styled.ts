@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 export const BaseTable = styled(HTMLTable)({
   width: '100%',
-  position: 'relative',
   borderCollapse: 'collapse'
 });
 
@@ -26,7 +25,7 @@ export const THBackground = styled.div({
 
 export const TableWrapper = styled.div`
   /* https://www.smashingmagazine.com/2019/01/table-design-patterns-web/#style-the-scroll */
-  position: relative;
+  /* position: relative;
   overflow-y: hidden;
   overflow-x: auto;
   max-width: 100%;
@@ -47,5 +46,5 @@ export const TableWrapper = styled.div`
     > table {
       background: none;
     }
-  }
+  } */
 `;

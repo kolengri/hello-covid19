@@ -20,6 +20,8 @@ const Detail: React.FC<{ country: string }> = ({ country }) => {
   return <Button onClick={handleRedirect}>Detail</Button>;
 };
 
+const sortTableByNumber = { sortMethod: (a: string, b: string) => Number(a) - Number(b) } as any;
+
 const columns: TableColumns<StoreItem> = [
   {
     Header: 'Country',
@@ -63,6 +65,14 @@ const columns: TableColumns<StoreItem> = [
         Cell: ({ cell }) => {
           return cell.value > 0 ? <Success>{cell.value.toLocaleString()}</Success> : cell.value;
         }
+      },
+
+      {
+        Header: 'Cases per Mil.',
+        id: 'casesPerMil',
+        accessor: (c) => c.casesPerOneMillion,
+        Cell: ({ cell }) => cell.value.toLocaleString(),
+        ...sortTableByNumber
       }
     ]
   },
@@ -83,6 +93,16 @@ const columns: TableColumns<StoreItem> = [
         Cell: ({ cell }) => {
           return cell.value > 0 ? <Danger>+{cell.value.toLocaleString()}</Danger> : cell.value;
         }
+      },
+      {
+        Header: 'Deaths per Mil.',
+        id: 'deathsPerMil',
+
+        accessor: (c) => c.deathsPerOneMillion,
+        Cell: ({ cell }) => {
+          return <Danger>{cell.value.toLocaleString()}</Danger>;
+        },
+        ...sortTableByNumber
       }
     ]
   },
@@ -101,7 +121,8 @@ const columns: TableColumns<StoreItem> = [
     Cell: ({ cell }) => {
       const ratio = cell.value.toFixed(2).toLocaleString();
       return <Danger>{ratio}</Danger>;
-    }
+    },
+    ...sortTableByNumber
   },
   {
     Header: 'Actions',
